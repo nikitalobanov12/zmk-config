@@ -19,8 +19,10 @@ jobs:
         include:
           - shield: lily58_left
             board: nice_nano
+            artifact: left
           - shield: lily58_right
             board: nice_nano
+            artifact: right
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -57,17 +59,23 @@ jobs:
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: firmware
+          name: firmware-${{ matrix.artifact }}
           path: ${{ matrix.shield }}-${{ matrix.board }}-zmk.uf2
 
   combine:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Download All Artifacts
+      - name: Download Left Artifact
         uses: actions/download-artifact@v4
         with:
-          name: firmware
+          name: firmware-left
+          path: firmware
+
+      - name: Download Right Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: firmware-right
           path: firmware
 
       - name: Display structure of downloaded files
