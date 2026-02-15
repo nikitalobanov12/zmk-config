@@ -1,0 +1,81 @@
+// Lily58 ZMK Keymap with Home Row Mods
+// Optimized layout for nice!nano
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+
+// Home row mods configuration
+// Tap for letter, hold for modifier
+#define HM_A &mt LCTRL A
+#define HM_S &mt LALT S
+#define HM_D &mt LGUI D
+#define HM_F &mt LSHFT F
+
+#define HM_J &mt RSHFT J
+#define HM_K &mt RGUI K
+#define HM_L &mt RALT L
+#define HM_SEMI &mt RCTRL SEMI
+
+// Layer-tap: tap for key, hold for layer
+#define LT_SPC &lt 1 SPACE
+#define LT_ENT &lt 2 RET
+#define LT_BSP &lt 1 BSPC
+#define LT_TAB &lt 2 TAB
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        // Layer 0: Base Layer with Home Row Mods
+        default_layer {
+            bindings = <
+                // Left Hand                                                    // Right Hand
+                &kp GRAVE &kp N1 &kp N2 &kp N3 &kp N4 &kp N5                   &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp EQUAL
+                &kp TAB   &kp Q  &kp W  &kp E  &kp R  &kp T                     &kp Y  &kp U  &kp I  &kp O  &kp P  &kp MINUS
+                &kp ESC   HM_A  HM_S  HM_D  HM_F  &kp G                        &kp H  HM_J  HM_K  HM_L  HM_SEMI &kp SQT
+                &kp LSHFT &kp Z  &kp X  &kp C  &kp V  &kp B  &kp LBKT         &kp RBKT &kp N &kp M &kp COMMA &kp DOT &kp FSLH &kp RET
+                                      &kp LGUI &kp LALT LT_BSP LT_SPC         LT_ENT LT_TAB &kp BSPC &kp ESC
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+
+        // Layer 1: Symbol and Number Layer
+        symnum_layer {
+            bindings = <
+                &trans &trans &trans &trans &trans &trans                     &trans &trans &trans &trans &trans &trans
+                &trans &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT             &kp CARET &kp AMPS &kp ASTRK &kp LPAR &kp RPAR &trans
+                &trans &kp N1 &kp N2 &kp N3 &kp N4 &kp N5                       &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &trans
+                &trans &kp TILDE &kp GRAVE &kp PIPE &kp BSLH &trans &kp LBRC   &kp RBRC &kp PLUS &kp MINUS &kp EQUAL &kp LBKT &kp RBKT &trans
+                                      &trans &trans &trans &trans               &mo 3 &trans &trans &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
+        };
+
+        // Layer 2: Navigation and Function Layer
+        nav_layer {
+            bindings = <
+                &bootloader &kp F1 &kp F2 &kp F3 &kp F4 &kp F5                 &kp F6 &kp F7 &kp F8 &kp F9 &kp F10 &bootloader
+                &trans &trans &trans &trans &trans &trans                      &trans &trans &trans &trans &kp F11 &kp F12
+                &trans &kp HOME &kp PG_UP &kp PG_DN &kp END &trans             &trans &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans
+                &trans &trans &trans &trans &trans &trans &trans               &trans &kp K_PREV &kp K_PP &kp K_NEXT &kp K_MUTE &kp C_VOL_UP &trans
+                                      &trans &trans &trans &mo 3               &trans &kp C_VOL_DN &trans &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+
+        // Layer 3: Bluetooth and Adjust Layer
+        adjust_layer {
+            bindings = <
+                &bootloader &trans &trans &trans &trans &trans                 &trans &trans &trans &trans &trans &bootloader
+                &trans &trans &trans &trans &trans &trans                      &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans                      &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans &trans
+                                      &trans &trans &trans &trans               &trans &trans &trans &trans
+            >;
+        };
+    };
+};
